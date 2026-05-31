@@ -1,5 +1,6 @@
 package controller;
 
+import dao.MovimentacaoDAO;
 import model.Movimentacao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,6 +66,10 @@ public class DashboardController {
         colData.setCellValueFactory(
                 new PropertyValueFactory<>("data"));
 
+        MovimentacaoDAO dao = new MovimentacaoDAO();
+
+        lista.addAll(dao.listar());
+
         tableMovimentacoes.setItems(lista);
     }
 
@@ -83,6 +88,10 @@ public class DashboardController {
             movimentacao.setTipo(cbTipo.getValue());
 
             movimentacao.setData(dpData.getValue());
+
+            MovimentacaoDAO dao = new MovimentacaoDAO();
+
+            dao.salvar(movimentacao);
 
             lista.add(movimentacao);
 

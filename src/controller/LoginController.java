@@ -1,8 +1,7 @@
 package controller;
 
 import model.Usuario;
-import model.Sessao;
-
+import dao.UsuarioDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,18 +27,10 @@ public class LoginController {
 
         usuario.setSenha(txtSenha.getText());
 
-        boolean encontrado = false;
+        UsuarioDAO dao = new UsuarioDAO();
 
-        for(Usuario u : Sessao.usuarios) {
-
-            if(u.getNome().equals(usuario.getNome()) &&
-               u.getSenha().equals(usuario.getSenha())) {
-
-                encontrado = true;
-
-                break;
-            }
-        }
+        boolean encontrado = 
+                dao.validarLogin(usuario);
 
         if(encontrado) {
 
