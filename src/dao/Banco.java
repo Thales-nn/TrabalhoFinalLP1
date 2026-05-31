@@ -1,10 +1,11 @@
-import dao.ConnectionFactory;
+package dao;
+
 import java.sql.Connection;
 import java.sql.Statement;
 
-public class CriarBanco {
+public class Banco {
 
-    public static void main(String[] args) {
+    public static void criarTabelas() {
 
         try (
             Connection conn = ConnectionFactory.conectar();
@@ -29,7 +30,7 @@ public class CriarBanco {
                 )
             """);
 
-            System.out.println("Tabelas criadas com sucesso!");
+            System.out.println("Tabelas verificadas/criadas.");
 
         } catch (Exception e) {
             e.printStackTrace();
