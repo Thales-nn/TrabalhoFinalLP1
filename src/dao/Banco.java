@@ -26,7 +26,9 @@ public class Banco {
                     descricao TEXT NOT NULL,
                     valor REAL NOT NULL,
                     tipo TEXT NOT NULL,
-                    data TEXT NOT NULL
+                    data TEXT NOT NULL,
+                    usuario_id INTEGER NOT NULL,
+                    FOREIGN KEY(usuario_id) REFERENCES usuario(id)
                 )
             """);
 

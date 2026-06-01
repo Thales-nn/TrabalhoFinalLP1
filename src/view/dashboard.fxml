@@ -3,15 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0"
+<AnchorPane stylesheets="@style.css"
+            prefHeight="600.0" 
+            prefWidth="800.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.DashboardController">
 
     <children>
 
-        <Label layoutX="30" layoutY="20"
-               text="Gerenciador Financeiro" />
+        <Label layoutX="280" 
+               layoutY="20"
+               text="Gerenciador Financeiro"
+               styleClass="titulo" />
 
         <TextField fx:id="txtDescricao"
                    layoutX="30"
@@ -35,10 +39,12 @@
                     layoutY="70"
                     prefWidth="140" />
 
-        <Button layoutX="690"
+        <Button layoutX="680"
                 layoutY="70"
+                prefWidth="90"
                 text="Salvar"
-                onAction="#salvarMovimentacao" />
+                onAction="#salvarMovimentacao"
+                styleClass="salvar" />
 
         <TableView fx:id="tableMovimentacoes"
                    layoutX="30"

@@ -40,4 +40,14 @@ public class Movimentacao {
     public void setData(LocalDate data) {
         this.data = data;
     }
+
+    private int usuarioId;
+
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 }

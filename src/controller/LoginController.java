@@ -1,5 +1,6 @@
 package controller;
 
+import model.Sessao;
 import model.Usuario;
 import dao.UsuarioDAO;
 import javafx.fxml.FXML;
@@ -29,10 +30,12 @@ public class LoginController {
 
         UsuarioDAO dao = new UsuarioDAO();
 
-        boolean encontrado = 
-                dao.validarLogin(usuario);
+Usuario usuarioLogado =
+        dao.validarLogin(usuario);
 
-        if(encontrado) {
+        if(usuarioLogado != null) {
+
+            Sessao.usuarioLogado = usuarioLogado;
 
             try {
 

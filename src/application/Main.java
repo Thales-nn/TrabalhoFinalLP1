@@ -18,8 +18,13 @@ public class Main extends Application {
 
         Scene scene = new Scene(loader.load());
 
+        scene.getStylesheets().add(
+            getClass().getResource("/view/style.css").toExternalForm()
+        );
+        
         stage.setTitle("Gerenciador Financeiro");
         stage.setScene(scene);
         stage.show();
+        
     }
 }

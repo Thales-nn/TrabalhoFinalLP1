@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0"
+<AnchorPane stylesheets="@style.css"
+            prefHeight="400.0"
             prefWidth="500.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -11,31 +12,32 @@
 
     <children>
 
-        <Label layoutX="180"
-               layoutY="40"
-               text="Login" />
+        <Label layoutX="220"
+               layoutY="60"
+               text="Login"
+               styleClass="titulo" />
 
         <TextField fx:id="txtUsuario"
-                   layoutX="150"
+                   layoutX="140"
                    layoutY="120"
-                   prefWidth="200"
+                   prefWidth="210"
                    promptText="Usuário" />
 
         <PasswordField fx:id="txtSenha"
-                       layoutX="150"
+                       layoutX="140"
                        layoutY="180"
-                       prefWidth="200"
+                       prefWidth="210"
                        promptText="Senha" />
 
-        <Button layoutX="150"
+        <Button layoutX="140"
                 layoutY="250"
-                prefWidth="90"
+                prefWidth="100"
                 text="Entrar"
                 onAction="#entrar" />
 
-        <Button layoutX="260"
+        <Button layoutX="250"
                 layoutY="250"
-                prefWidth="90"
+                prefWidth="100"
                 text="Registrar"
                 onAction="#abrirCadastro" />
 

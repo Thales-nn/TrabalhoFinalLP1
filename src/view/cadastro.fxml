@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="300.0"
+<AnchorPane stylesheets="@style.css"
+            prefHeight="300.0"
             prefWidth="400.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -11,9 +12,10 @@
 
     <children>
 
-        <Label layoutX="130"
-               layoutY="30"
-               text="Cadastro" />
+        <Label layoutX="150"
+               layoutY="50"
+               text="Cadastro"
+               styleClass="titulo" />
 
         <TextField fx:id="txtNovoUsuario"
                    layoutX="100"
@@ -27,10 +29,12 @@
                        prefWidth="200"
                        promptText="Senha" />
 
-        <Button layoutX="160"
+        <Button layoutX="100"
                 layoutY="200"
+                prefWidth="200"
                 text="Cadastrar"
-                onAction="#cadastrar" />
+                onAction="#cadastrar"
+                styleClass="cadastro" />
 
     </children>
 

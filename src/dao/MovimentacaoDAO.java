@@ -13,7 +13,8 @@ public class MovimentacaoDAO {
 
     public void salvar(Movimentacao movimentacao) {
 
-        String sql = "INSERT INTO movimentacao(descricao, valor, tipo, data) VALUES (?, ?, ?, ?)";
+        String sql =
+            "INSERT INTO movimentacao(descricao, valor, tipo, data, usuario_id) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -22,7 +23,7 @@ public class MovimentacaoDAO {
             stmt.setDouble(2, movimentacao.getValor());
             stmt.setString(3, movimentacao.getTipo());
             stmt.setString(4, movimentacao.getData().toString());
-
+            stmt.setInt(5, movimentacao.getUsuarioId());
             stmt.execute();
 
         } catch (Exception e) {
@@ -30,39 +31,47 @@ public class MovimentacaoDAO {
         }
     }
 
-    public List<Movimentacao> listar() {
+    public List<Movimentacao> listarPorUsuario(int usuarioId) {
 
-        List<Movimentacao> movimentacoes = new ArrayList<>();
+    List<Movimentacao> movimentacoes = new ArrayList<>();
 
-        String sql = "SELECT * FROM movimentacao";
+    String sql =
+        "SELECT * FROM movimentacao WHERE usuario_id = ?";
 
-        try (Connection conn = ConnectionFactory.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+    try (Connection conn = ConnectionFactory.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            while (rs.next()) {
+        stmt.setInt(1, usuarioId);
 
-                Movimentacao movimentacao = new Movimentacao();
+        ResultSet rs = stmt.executeQuery();
 
-                movimentacao.setDescricao(
-                        rs.getString("descricao"));
+        while (rs.next()) {
 
-                movimentacao.setValor(
-                        rs.getDouble("valor"));
+            Movimentacao movimentacao = new Movimentacao();
 
-                movimentacao.setTipo(
-                        rs.getString("tipo"));
+            movimentacao.setDescricao(
+                rs.getString("descricao"));
 
-                movimentacao.setData(
-                        LocalDate.parse(rs.getString("data")));
+            movimentacao.setValor(
+                rs.getDouble("valor"));
 
-                movimentacoes.add(movimentacao);
-            }
+            movimentacao.setTipo(
+                rs.getString("tipo"));
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            movimentacao.setData(
+                LocalDate.parse(rs.getString("data")));
+
+            movimentacao.setUsuarioId(
+                rs.getInt("usuario_id")
+            );
+
+            movimentacoes.add(movimentacao);
         }
 
-        return movimentacoes;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return movimentacoes;
+}
 }

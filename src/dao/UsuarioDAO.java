@@ -27,28 +27,41 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean validarLogin(Usuario usuario) {
+    public Usuario validarLogin(Usuario usuario) {
 
-        String sql =
-                "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+    String sql =
+        "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
 
-        try (Connection conn = ConnectionFactory.conectar();
-             PreparedStatement stmt =
-                     conn.prepareStatement(sql)) {
+    try (Connection conn = ConnectionFactory.conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, usuario.getNome());
-            stmt.setString(2, usuario.getSenha());
+        stmt.setString(1, usuario.getNome());
+        stmt.setString(2, usuario.getSenha());
 
-            ResultSet rs = stmt.executeQuery();
+        ResultSet rs = stmt.executeQuery();
 
-            return rs.next();
+        if (rs.next()) {
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            Usuario usuarioBanco = new Usuario();
+
+            usuarioBanco.setId(
+                rs.getInt("id"));
+
+            usuarioBanco.setNome(
+                rs.getString("nome"));
+
+            usuarioBanco.setSenha(
+                rs.getString("senha"));
+
+            return usuarioBanco;
         }
 
-        return false;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return null;
+}
 
     public boolean usuarioExiste(String nome) {
 

@@ -2,6 +2,7 @@ package controller;
 
 import dao.MovimentacaoDAO;
 import model.Movimentacao;
+import model.Sessao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableRow;
 
 import java.time.LocalDate;
 
@@ -48,36 +51,110 @@ public class DashboardController {
             FXCollections.observableArrayList();
 
     @FXML
-    public void initialize() {
+public void initialize() {
 
-        cbTipo.getItems().addAll("Lucro", "Prejuízo");
+    cbTipo.getItems().addAll("Lucro", "Prejuízo");
 
-        dpData.setValue(LocalDate.now());
+    dpData.setValue(LocalDate.now());
 
-        colDescricao.setCellValueFactory(
-                new PropertyValueFactory<>("descricao"));
+    colDescricao.setCellValueFactory(
+            new PropertyValueFactory<>("descricao"));
 
-        colValor.setCellValueFactory(
-                new PropertyValueFactory<>("valor"));
+    colValor.setCellValueFactory(
+            new PropertyValueFactory<>("valor"));
 
-        colTipo.setCellValueFactory(
-                new PropertyValueFactory<>("tipo"));
+    colTipo.setCellValueFactory(
+            new PropertyValueFactory<>("tipo"));
 
-        colData.setCellValueFactory(
-                new PropertyValueFactory<>("data"));
+    colData.setCellValueFactory(
+            new PropertyValueFactory<>("data"));
 
-        MovimentacaoDAO dao = new MovimentacaoDAO();
+    // Cor do valor
+    colValor.setCellFactory(column -> new TableCell<Movimentacao, Double>() {
 
-        lista.addAll(dao.listar());
+        @Override
+        protected void updateItem(Double valor, boolean empty) {
 
-        tableMovimentacoes.setItems(lista);
-    }
+            super.updateItem(valor, empty);
+
+            if (empty || valor == null) {
+
+                setText(null);
+                setStyle("");
+
+            } else {
+
+                setText(String.format("R$ %.2f", valor));
+
+                Movimentacao mov =
+                        getTableView().getItems().get(getIndex());
+
+                if ("Lucro".equals(mov.getTipo())) {
+
+                    setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+
+                } else {
+
+                    setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                }
+            }
+        }
+    });
+
+    // Cor da linha inteira
+    tableMovimentacoes.setRowFactory(tv -> new TableRow<Movimentacao>() {
+
+        @Override
+        protected void updateItem(
+                Movimentacao item,
+                boolean empty) {
+
+            super.updateItem(item, empty);
+
+            if (empty || item == null) {
+
+                setStyle("");
+
+            } else if ("Lucro".equals(item.getTipo())) {
+
+                setStyle(
+                    "-fx-background-color: #d7f1d9; "
+                );
+                setStyle(
+                    "-fx-background-color: #d7f1d9;"
+                );
+
+
+            } else if ("Prejuízo".equals(item.getTipo())) {
+
+                setStyle(
+                    "-fx-background-color: #ffdfdf;"
+                );
+            }
+        }
+    });
+
+    MovimentacaoDAO dao = new MovimentacaoDAO();
+
+    lista.addAll(
+        dao.listarPorUsuario(
+            Sessao.usuarioLogado.getId()
+        )
+    );
+
+    tableMovimentacoes.setItems(lista);
+
+    // Faz as colunas ocuparem toda a largura da tabela
+    tableMovimentacoes.setColumnResizePolicy(
+        TableView.CONSTRAINED_RESIZE_POLICY
+    );
+}
 
     @FXML
     public void salvarMovimentacao() {
 
         try {
-
+            
             Movimentacao movimentacao = new Movimentacao();
 
             movimentacao.setDescricao(txtDescricao.getText());
@@ -88,6 +165,9 @@ public class DashboardController {
             movimentacao.setTipo(cbTipo.getValue());
 
             movimentacao.setData(dpData.getValue());
+
+            movimentacao.setUsuarioId(
+                Sessao.usuarioLogado.getId());
 
             MovimentacaoDAO dao = new MovimentacaoDAO();
 
