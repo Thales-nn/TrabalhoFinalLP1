@@ -1,15 +1,8 @@
-/* =========================
-   GERAL
-   ========================= */
-
 .root {
     -fx-background-color: #f5d5d5;
     -fx-font-family: "Segoe UI";
 }
 
-/* =========================
-   TÍTULOS
-   ========================= */
 
 .label {
     -fx-text-fill: #502c2c;
@@ -22,9 +15,6 @@
     -fx-text-fill: #920e0e;
 }
 
-/* =========================
-   CAMPOS DE TEXTO
-   ========================= */
 
 .text-field,
 .password-field,
@@ -45,9 +35,6 @@
     -fx-border-color: #ff0000;
 }
 
-/* =========================
-   BOTÕES
-   ========================= */
 
 .button {
     -fx-background-color: #ac0707;
@@ -102,9 +89,6 @@
     -fx-background-color: #c70d0d;
 }
 
-/* =========================
-   TABELA
-   ========================= */
 
 .table-view {
     -fx-background-color: white;
@@ -130,9 +114,6 @@
     -fx-background-color: #ffd1d1;
 }
 
-/* =========================
-   COMBOBOX
-   ========================= */
 
 .combo-box {
     -fx-background-color: white;
@@ -140,9 +121,6 @@
     -fx-font-size: 12px;
 }
 
-/* =========================
-   DATE PICKER
-   ========================= */
 
 .date-picker {
     -fx-background-color: white;
